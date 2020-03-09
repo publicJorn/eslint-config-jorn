@@ -28,7 +28,22 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  plugins: ['import', 'flowtype', 'jsx-a11y', 'react', 'react-hooks'],
+  extends: [
+    'standard',
+    'standard-react',
+    'plugin:prettier/recommended',
+    'plugin:jest/recommended',
+  ],
+
+  plugins: [
+    'import',
+    'flowtype',
+    'jsx-a11y',
+    'react',
+    'react-hooks',
+    'prettier',
+    'jest'
+  ],
 
   env: {
     browser: true,
@@ -53,66 +68,67 @@ module.exports = {
   },
 
   overrides: [
-    {
-      files: ['**/*.ts?(x)'],
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        ecmaVersion: 2018,
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
+    // TODO: TS support
+    // {
+    //   files: ['**/*.ts?(x)'],
+    //   parser: '@typescript-eslint/parser',
+    //   parserOptions: {
+    //     ecmaVersion: 2018,
+    //     sourceType: 'module',
+    //     ecmaFeatures: {
+    //       jsx: true,
+    //     },
 
-        // typescript-eslint specific options
-        warnOnUnsupportedTypeScriptVersion: true,
-      },
-      plugins: ['@typescript-eslint'],
-      // If adding a typescript-eslint version of an existing ESLint rule,
-      // make sure to disable the ESLint rule here.
-      rules: {
-        // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
-        'default-case': 'off',
-        // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/291)
-        'no-dupe-class-members': 'off',
-        // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/477)
-        'no-undef': 'off',
+    //     // typescript-eslint specific options
+    //     warnOnUnsupportedTypeScriptVersion: true,
+    //   },
+    //   plugins: ['@typescript-eslint'],
+    //   // If adding a typescript-eslint version of an existing ESLint rule,
+    //   // make sure to disable the ESLint rule here.
+    //   rules: {
+    //     // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
+    //     'default-case': 'off',
+    //     // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/291)
+    //     'no-dupe-class-members': 'off',
+    //     // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/477)
+    //     'no-undef': 'off',
 
-        // Add TypeScript specific rules (and turn off ESLint equivalents)
-        '@typescript-eslint/consistent-type-assertions': 'warn',
-        'no-array-constructor': 'off',
-        '@typescript-eslint/no-array-constructor': 'warn',
-        '@typescript-eslint/no-namespace': 'error',
-        'no-use-before-define': 'off',
-        '@typescript-eslint/no-use-before-define': [
-          'warn',
-          {
-            functions: false,
-            classes: false,
-            variables: false,
-            typedefs: false,
-          },
-        ],
-        'no-unused-expressions': 'off',
-        '@typescript-eslint/no-unused-expressions': [
-          'error',
-          {
-            allowShortCircuit: true,
-            allowTernary: true,
-            allowTaggedTemplates: true,
-          },
-        ],
-        'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': [
-          'warn',
-          {
-            args: 'none',
-            ignoreRestSiblings: true,
-          },
-        ],
-        'no-useless-constructor': 'off',
-        '@typescript-eslint/no-useless-constructor': 'warn',
-      },
-    },
+    //     // Add TypeScript specific rules (and turn off ESLint equivalents)
+    //     '@typescript-eslint/consistent-type-assertions': 'warn',
+    //     'no-array-constructor': 'off',
+    //     '@typescript-eslint/no-array-constructor': 'warn',
+    //     '@typescript-eslint/no-namespace': 'error',
+    //     'no-use-before-define': 'off',
+    //     '@typescript-eslint/no-use-before-define': [
+    //       'warn',
+    //       {
+    //         functions: false,
+    //         classes: false,
+    //         variables: false,
+    //         typedefs: false,
+    //       },
+    //     ],
+    //     'no-unused-expressions': 'off',
+    //     '@typescript-eslint/no-unused-expressions': [
+    //       'error',
+    //       {
+    //         allowShortCircuit: true,
+    //         allowTernary: true,
+    //         allowTaggedTemplates: true,
+    //       },
+    //     ],
+    //     'no-unused-vars': 'off',
+    //     '@typescript-eslint/no-unused-vars': [
+    //       'warn',
+    //       {
+    //         args: 'none',
+    //         ignoreRestSiblings: true,
+    //       },
+    //     ],
+    //     'no-useless-constructor': 'off',
+    //     '@typescript-eslint/no-useless-constructor': 'warn',
+    //   },
+    // },
   ],
 
   // NOTE: When adding rules here, you need to make sure they are compatible with
@@ -120,6 +136,8 @@ module.exports = {
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
+    // Wo do throw a warning when using UNSAFE functions, but the warning will be more specific: react/no-unsafe
+    'camelcase': ['error', { 'allow': ['^UNSAFE_'] }],
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'smart'],
@@ -127,6 +145,7 @@ module.exports = {
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
     'no-cond-assign': ['warn', 'except-parens'],
+    'no-console': ['warn', { allow: ['error', 'warn'] }],
     'no-const-assign': 'warn',
     'no-control-regex': 'warn',
     'no-delete-var': 'warn',
@@ -258,27 +277,19 @@ module.exports = {
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
+    'react/forbid-prop-types': ['error', { forbid: ['any'] }],
     'react/jsx-no-comment-textnodes': 'warn',
     'react/jsx-no-duplicate-props': 'warn',
     'react/jsx-no-target-blank': 'warn',
     'react/jsx-no-undef': 'error',
-    'react/jsx-pascal-case': [
-      'warn',
-      {
-        allowAllCaps: true,
-        ignore: [],
-      },
-    ],
+    'react/jsx-pascal-case': ['error', { allowAllCaps: true }],
     'react/jsx-uses-react': 'warn',
     'react/jsx-uses-vars': 'warn',
     'react/no-danger-with-children': 'warn',
-    // Disabled because of undesirable warnings
-    // See https://github.com/facebook/create-react-app/issues/5204 for
-    // blockers until its re-enabled
-    // 'react/no-deprecated': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/no-is-mounted': 'warn',
     'react/no-typos': 'error',
+    'react/no-unsafe': 'warn',
     'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'error',
     'react/style-prop-object': 'warn',
@@ -315,5 +326,40 @@ module.exports = {
     'flowtype/define-flow-type': 'warn',
     'flowtype/require-valid-file-annotation': 'warn',
     'flowtype/use-flow-type': 'warn',
+
+    // https://prettier.io/docs/en/options.html
+    'prettier/prettier': ['error', {
+      tabWidth: 2,
+      useTabs: false,
+      semi: false,
+      singleQuote: true,
+      trailingComma: 'all',
+      arrowParens: 'always'
+    }],
+
+    // https://github.com/jest-community/eslint-plugin-jest#rules
+    'jest/consistent-test-it': [
+      'error',
+      {
+        'fn': 'test',
+        'withinDescribe': 'it'
+      }
+    ],
+    'jest/expect-expect': [
+      'error',
+      {
+        'assertFunctionNames': [
+          'expect'
+        ]
+      }
+    ],
+    'jest/no-jasmine-globals': 'error',
+    'jest/no-test-callback': 'error',
+    'jest/prefer-to-be-null': 'error',
+    'jest/prefer-to-be-undefined': 'error',
+    'jest/prefer-to-contain': 'error',
+    'jest/prefer-to-have-length': 'error',
+    'jest/valid-describe': 'error',
+    'jest/valid-expect-in-promise': 'error'
   },
 };

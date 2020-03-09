@@ -1,18 +1,14 @@
-# eslint-config-react-app
+# eslint-config-jorn
 
-This package includes the shareable ESLint configuration used by [Create React App](https://github.com/facebook/create-react-app).<br>
-Please refer to its documentation:
+This package contains config for eslint using [standard-js]() and [prettier](), bolstered by best practises taken from create-react-app and some of my own preferences.
 
-- [Getting Started](https://facebook.github.io/create-react-app/docs/getting-started) – How to create a new app.
-- [User Guide](https://facebook.github.io/create-react-app/) – How to develop apps bootstrapped with Create React App.
+You can consume this different ways:
 
-## Usage in Create React App Projects
+- [In your custom react application](#usage)
+- [Using create react app](#use-in-cra)
+- Typescript versions (TODO)
 
-The easiest way to use this configuration is with [Create React App](https://github.com/facebook/create-react-app), which includes it by default.
-
-**You don’t need to install it separately in Create React App projects.**
-
-## Usage Outside of Create React App
+<a id="usage"></a>## Usage
 
 If you want to use this ESLint configuration in a project not built with Create React App, you can install it with the following steps.
 
@@ -31,6 +27,12 @@ Then create a file named `.eslintrc.json` with following contents in the root fo
 ```
 
 That's it! You can override the settings from `eslint-config-react-app` by editing the `.eslintrc.json` file. Learn more about [configuring ESLint](http://eslint.org/docs/user-guide/configuring) on the ESLint website.
+
+<a id="use-in-cra"></a>## Usage in Create React App Projects
+
+
+
+# @TODO: keep? ----
 
 ## Accessibility Checks
 
@@ -63,5 +65,3 @@ If you want to enable even more accessibility rules, you can create an `.eslintr
   "plugins": ["jsx-a11y"]
 }
 ```
-
-However, if you are using [Create React App](https://github.com/facebook/create-react-app) and have not ejected, any additional rules will only be displayed in the [IDE integrations](https://facebook.github.io/create-react-app/docs/setting-up-your-editor#displaying-lint-output-in-the-editor), but not in the browser or the terminal.
