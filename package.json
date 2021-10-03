@@ -2,6 +2,13 @@
   "name": "eslint-config-jorn",
   "description": "ESLint configuration for safe and beautiful code",
   "homepage": "https://github.com/publicJorn/eslint-config-jorn",
+  "keywords": [
+    "eslint",
+    "eslintConfig",
+    "react",
+    "standard-js",
+    "prettier"
+  ],
   "bugs": {
     "url": "https://github.com/publicJorn/eslint-config-jorn/issues"
   },
@@ -9,9 +16,11 @@
   "files": [
     "index.js"
   ],
-  "devDependencies": {
+  "dependencies": {
+    "confusing-browser-globals": "1.x"
+  },
+  "peerDependencies": {
     "babel-eslint": "10.x",
-    "confusing-browser-globals": "1.X",
     "eslint": "6.x",
     "eslint-config-prettier": "6.x",
     "eslint-config-react": "1.x",
@@ -28,11 +37,5 @@
     "eslint-plugin-promise": "4.x",
     "eslint-plugin-standard": "4.x",
     "prettier": "1.x"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/facebook/create-react-app.git",
-    "directory": "packages/eslint-config-react-app"
-  },
-  "version": "5.1.0"
+  }
 }
